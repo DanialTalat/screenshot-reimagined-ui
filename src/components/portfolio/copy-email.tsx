@@ -7,12 +7,28 @@ import { cn } from "@/lib/utils";
 const PILL_CLASS =
   "inline-flex items-center gap-1.5 rounded-full border border-border bg-secondary/60 px-4 py-2 text-sm font-medium transition-all duration-200 hover:border-foreground/20 hover:bg-accent hover:scale-[1.03] active:scale-[0.98]";
 
+async function writeClipboard(text: string) {
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    // Fallback for browsers/contexts that deny the async clipboard API.
+    const area = document.createElement("textarea");
+    area.value = text;
+    area.style.position = "fixed";
+    area.style.opacity = "0";
+    document.body.appendChild(area);
+    area.select();
+    document.execCommand("copy");
+    area.remove();
+  }
+}
+
 export function useCopyEmail() {
   const [copied, setCopied] = useState(false);
 
   const copy = useCallback(async () => {
     try {
-      await navigator.clipboard.writeText(EMAIL);
+      await writeClipboard(EMAIL);
       toast.success("Email copied to clipboard", { description: EMAIL });
       setCopied(true);
       window.setTimeout(() => setCopied(false), 1800);
