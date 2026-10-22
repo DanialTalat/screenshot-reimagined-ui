@@ -1,24 +1,56 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Hero } from "@/components/portfolio/hero";
+import { Works } from "@/components/portfolio/works";
+import { Experience } from "@/components/portfolio/experience";
+import { TechStack } from "@/components/portfolio/tech-stack";
+import { Footer } from "@/components/portfolio/footer";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      {
+        title: "Danial Talat — Full-Stack Developer & AI Engineer",
+      },
+      {
+        name: "description",
+        content:
+          "Portfolio of Danial Talat (FA23-BCS-014) — Full-Stack Software Developer, AI/Automation Engineer, and Founder of WebSync. Custom web applications, autonomous AI agents, and e-commerce architecture.",
+      },
+      {
+        property: "og:title",
+        content: "Danial Talat — Full-Stack Developer & AI Engineer",
+      },
+      {
+        property: "og:description",
+        content:
+          "Full-Stack Software Developer, AI/Automation Engineer, and Founder of WebSync. Building high-performance web applications, autonomous AI agents, and enterprise e-commerce architectures.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+      {
+        name: "twitter:title",
+        content: "Danial Talat — Full-Stack Developer & AI Engineer",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "Full-Stack Software Developer, AI/Automation Engineer, and Founder of WebSync.",
+      },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="mx-auto w-full max-w-3xl px-5 sm:px-8">
+      <Hero />
+      <main>
+        <Works />
+        <Experience />
+        <TechStack />
+      </main>
+      <Footer />
     </div>
   );
 }
